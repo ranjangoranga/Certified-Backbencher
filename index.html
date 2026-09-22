@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Certified Backbencher — student notes, assignments and sample questions.">
+    <title>Certified Backbencher</title>
+
+    <style>
+        /* =========================================================
+           CERTIFIED BACKBENCHER
+           Complete CSS
+        ========================================================= */
+
+        :root {
+            --bg: #0b0b0d;
+            --bg-soft: #121216;
+            --card: #15151a;
+            --card-hover: #1b1b21;
+            --text: #f5f3ed;
+            --muted: #a5a3a0;
+            --border: rgba(255,255,255,0.10);
+            --yellow: #f6d84a;
+            --yellow-dark: #d7b92d;
+            --purple: #9b7cff;
+            --pink: #ff75b5;
+            --blue: #67c7ff;
+            --green: #7ee787;
+            --danger: #ff7070;
+            --shadow: 0 20px 60px rgba(0,0,0,0.30);
+            --radius: 22px;
+            --max-width: 1180px;
+        }
+
+        body.light {
+            --bg: #f4f1e9;
+            --bg-soft: #ebe7dc;
+            --card: #ffffff;
+            --card-hover: #f7f5ef;
+            --text: #171717;
+            --muted: #686660;
+            --border: rgba(0,0,0,0.10);
+            --shadow: 0 20px 50px rgba(0,0,0,0.10);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 5%, rgba(155,124,255,0.10), transparent 25%),
+                radial-gradient(circle at 90% 20%, rgba(246,216,74,0.08), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image:
+                radial-gradient(#fff 1px, transparent 1px);
+            background-size: 7px 7px;
+            z-index: 999;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(100% - 40px, var(--max-width));
+            margin: auto;
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(18px);
+            background: rgba(11,11,13,0.78);
+            border-bottom: 1px solid var(--border);
+        }
+
+        body.light .navbar {
+            background: rgba(244,241,233,0.82);
+        }
+
+        .nav-inner {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 900;
+            letter-spacing: -0.8px;
+            white-space: nowrap;
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: var(--yellow);
+            color: #111;
+            font-size: 22px;
+            transform: rotate(-5deg);
+            box-shadow: 4px 4px 0 var(--purple);
+        }
+
+        .logo-text {
+            line-height: 0.9;
+        }
+
+        .logo-text small {
+            display: block;
+            font-size: 9px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            margin-bottom: 3px;
+        }
+
+        .logo-text strong {
+            font-size: 17px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 10px 13px;
+            border-radius: 10px;
+            transition: 0.2s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text);
+            background: var(--card);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            transition: 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--yellow);
+        }
+
+        .login-btn {
+            border: 0;
+            background: var(--yellow);
+            color: #111;
+            font-weight: 800;
+            padding: 11px 16px;
+            border-radius: 12px;
+            transition: 0.2s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px) rotate(-1deg);
+            background: #ffe46b;
+        }
+
+        .hamburger {
+            display: none;
+        }
+
+        /* =========================================================
+           PAGE SYSTEM
+        ========================================================= */
+
+        .page {
+            display: none;
+            animation: pageIn 0.35s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            position: relative;
+            min-height: 690px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 60px;
+            padding: 80px 0 70px;
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--muted);
+            background: var(--card);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 12px var(--green);
+        }
+
+        .hero h1 {
+            font-size: clamp(58px, 9vw, 112px);
+            line-height: 0.82;
+            letter-spacing: -7px;
+            margin-bottom: 28px;
+            font-weight: 950;
+        }
+
+        .hero h1 .yellow {
+            color: var(--yellow);
+            display: inline-block;
+            transform: rotate(-2deg);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 2vw, 24px);
+            color: var(--muted);
+            max-width: 580px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            border-radius: 14px;
+            padding: 14px 19px;
+            font-weight: 850;
+            border: 1px solid var(--border);
+            transition: 0.2s ease;
+        }
+
+        .primary-btn {
+            background: var(--yellow);
+            color: #111;
+            border-color: var(--yellow);
+        }
+
+        .secondary-btn {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-art {
+            position: relative;
+            min-height: 470px;
+        }
+
+        .desk {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 360px;
+            height: 260px;
+            transform: translate(-50%, -50%) rotate(-3deg);
+            border: 2px solid var(--border);
+            background: var(--card);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .laptop {
+            position: absolute;
+            width: 220px;
+            height: 145px;
+            left: 70px;
+            top: 50px;
+            border: 7px solid #25252d;
+            border-bottom-width: 13px;
+            background: #111;
+            border-radius: 12px;
+            transform: rotate(-5deg);
+        }
+
+        .screen {
+            position: absolute;
+            inset: 9px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .screen::after {
+            content: "STUDY\nLATER.";
+            white-space: pre;
+            position: absolute;
+            left: 18px;
+            top: 23px;
+            color: white;
+            font-weight: 950;
+            font-size: 27px;
+            line-height: 0.9;
+            transform: rotate(-4deg);
+        }
+
+        .keyboard {
+            position: absolute;
+            left: 45px;
+            bottom: -25px;
+            width: 265px;
+            height: 35px;
+            background: #24242b;
+            border-radius: 5px 5px 15px 15px;
+            transform: rotate(-5deg);
+        }
+
+        .notebook {
+            position: absolute;
+            right: 30px;
+            bottom: 40px;
+            width: 150px;
+            height: 110px;
+            background: #fff4b7;
+            color: #171717;
+            border-radius: 5px;
+            padding: 18px;
+            transform: rotate(8deg);
+            box-shadow: 8px 10px 0 rgba(0,0,0,0.15);
+        }
+
+        .notebook strong {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .notebook p {
+            margin-top: 10px;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .sticker {
+            position: absolute;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-weight: 950;
+            font-size: 12px;
+            box-shadow: 5px 6px 0 rgba(0,0,0,0.18);
+        }
+
+        .sticker.one {
+            top: 30px;
+            right: 20px;
+            background: var(--yellow);
+            color: #111;
+            transform: rotate(8deg);
+        }
+
+        .sticker.two {
+            left: 0;
+            bottom: 40px;
+            background: var(--pink);
+            color: #111;
+            transform: rotate(-9deg);
+        }
+
+        .sticker.three {
+            right: 5px;
+            bottom: 10px;
+            background: var(--green);
+            color: #111;
+            transform: rotate(-3deg);
+        }
+
+        .scribble {
+            position: absolute;
+            color: var(--yellow);
+            font-size: 55px;
+            font-weight: 900;
+        }
+
+        .scribble.a {
+            top: 5px;
+            left: 30px;
+            transform: rotate(-15deg);
+        }
+
+        .scribble.b {
+            right: 0;
+            top: 150px;
+            color: var(--purple);
+            transform: rotate(20deg);
+        }
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .section-label {
+            color: var(--yellow);
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 58px);
+            line-height: 0.95;
+            letter-spacing: -2px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            padding: 22px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            border-radius: 18px;
+        }
+
+        .stat-number {
+            font-size: 35px;
+            font-weight: 950;
+        }
+
+        .stat-text {
+            color: var(--muted);
+            margin-top: 4px;
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           SUBJECT CARDS
+        ========================================================= */
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 17px;
+        }
+
+        .subject-card {
+            position: relative;
+            min-height: 245px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--card);
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-7px) rotate(-0.5deg);
+            background: var(--card-hover);
+            border-color: rgba(246,216,74,0.45);
+            box-shadow: var(--shadow);
+        }
+
+        .subject-card::after {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: var(--accent, var(--yellow));
+            opacity: 0.08;
+            right: -40px;
+            bottom: -40px;
+        }
+
+        .subject-code {
+            display: inline-flex;
+            padding: 8px 10px;
+            border-radius: 9px;
+            background: var(--accent, var(--yellow));
+            color: #111;
+            font-weight: 950;
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+
+        .subject-card h3 {
+            font-size: 23px;
+            margin-bottom: 9px;
+            letter-spacing: -0.7px;
+        }
+
+        .subject-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 250px;
+        }
+
+        .subject-bottom {
+            position: absolute;
+            left: 25px;
+            right: 25px;
+            bottom: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-count {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .open-arrow {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        /* =========================================================
+           RESOURCE CARDS
+        ========================================================= */
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .resource-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--card);
+            padding: 28px;
+            min-height: 230px;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--yellow);
+            box-shadow: var(--shadow);
+        }
+
+        .resource-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: var(--yellow);
+            color: #111;
+            font-size: 23px;
+            margin-bottom: 28px;
+        }
+
+        .resource-card:nth-child(2) .resource-icon {
+            background: var(--purple);
+        }
+
+        .resource-card:nth-child(3) .resource-icon {
+            background: var(--green);
+        }
+
+        .resource-card h3 {
+            font-size: 24px;
+            margin-bottom: 9px;
+        }
+
+        .resource-card p {
+            color: var(--muted);
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        .resource-arrow {
+            display: block;
+            margin-top: 20px;
+            font-weight: 850;
+        }
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        .search-box {
+            position: relative;
+            max-width: 680px;
+            margin: 0 auto 35px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 22px 18px 52px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-input:focus {
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 4px rgba(246,216,74,0.08);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 19px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        .search-results {
+            display: grid;
+            gap: 10px;
+        }
+
+        .search-result {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .search-result:hover {
+            border-color: var(--yellow);
+            transform: translateX(4px);
+        }
+
+        .search-result small {
+            color: var(--muted);
+        }
+
+        .empty {
+            text-align: center;
+            padding: 55px 20px;
+            color: var(--muted);
+            border: 1px dashed var(--border);
+            border-radius: 20px;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        /* =========================================================
+           SUBJECT DETAIL
+        ========================================================= */
+
+        .back-button {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 8px 0;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .back-button:hover {
+            color: var(--text);
+        }
+
+        .subject-hero {
+            padding: 50px 0 40px;
+        }
+
+        .subject-hero-code {
+            display: inline-block;
+            background: var(--yellow);
+            color: #111;
+            padding: 8px 12px;
+            border-radius: 9px;
+            font-weight: 950;
+            margin-bottom: 20px;
+        }
+
+        .subject-hero h1 {
+            font-size: clamp(48px, 7vw, 85px);
+            line-height: 0.9;
+            letter-spacing: -4px;
+            max-width: 850px;
+        }
+
+        .subject-hero p {
+            margin-top: 20px;
+            color: var(--muted);
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           RESOURCE DETAIL
+        ========================================================= */
+
+        .resource-header {
+            padding: 60px 0 35px;
+        }
+
+        .resource-header h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            letter-spacing: -3px;
+        }
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .pdf-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .pdf-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 17px;
+        }
+
+        .pdf-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pdf-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            background: var(--danger);
+            color: white;
+            border-radius: 12px;
+            font-weight: 900;
+        }
+
+        .pdf-info strong {
+            display: block;
+        }
+
+        .pdf-info small {
+            display: block;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .pdf-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .small-btn {
+            padding: 9px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            color: var(--text);
+            font-weight: 750;
+        }
+
+        .small-btn:hover {
+            border-color: var(--yellow);
+        }
+
+        /* =========================================================
+           ABOUT
+        ========================================================= */
+
+        .about-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-box h1 {
+            font-size: clamp(45px, 7vw, 80px);
+            line-height: 0.9;
+            letter-spacing: -4px;
+            max-width: 750px;
+        }
+
+        .about-box p {
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 700px;
+            margin-top: 25px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .tag {
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           QUOTE
+        ========================================================= */
+
+        .quote-box {
+            padding: 55px;
+            border-radius: 28px;
+            background: var(--yellow);
+            color: #111;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-box::after {
+            content: "“";
+            position: absolute;
+            right: 30px;
+            top: -40px;
+            font-size: 220px;
+            line-height: 1;
+            opacity: 0.12;
+        }
+
+        .quote-box p {
+            font-size: clamp(28px, 4vw, 52px);
+            line-height: 1;
+            font-weight: 950;
+            letter-spacing: -2px;
+            max-width: 800px;
+        }
+
+        .quote-btn {
+            margin-top: 25px;
+            border: 2px solid #111;
+            background: transparent;
+            color: #111;
+            border-radius: 12px;
+            padding: 11px 15px;
+            font-weight: 900;
+        }
+
+        /* =========================================================
+           LOGIN MODAL
+        ========================================================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            place-items: center;
+            background: rgba(0,0,0,0.72);
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            display: grid;
+        }
+
+        .modal {
+            width: min(100%, 430px);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+            position: relative;
+            animation: modalIn 0.25s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 18px;
+            top: 18px;
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            color: var(--text);
+        }
+
+        .modal h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .modal > p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 11px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            color: var(--text);
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--yellow);
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 14px;
+            margin-top: 5px;
+            border: 0;
+            border-radius: 12px;
+            background: var(--yellow);
+            color: #111;
+            font-weight: 900;
+        }
+
+        .forgot {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+            margin-top: 70px;
+            padding: 45px 0;
+        }
+
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .footer-brand p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .footer-links button {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links button:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 55px;
+            }
+
+            .hero-art {
+                min-height: 400px;
+            }
+
+            .subjects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 76px;
+                left: 20px;
+                right: 20px;
+                padding: 12px;
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 17px;
+                flex-direction: column;
+                align-items: stretch;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-link {
+                text-align: left;
+            }
+
+            .hamburger {
+                display: grid;
+            }
+
+            .login-btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .container {
+                width: min(100% - 26px, var(--max-width));
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 55px 0;
+            }
+
+            .hero h1 {
+                font-size: 64px;
+                letter-spacing: -4px;
+            }
+
+            .hero-art {
+                transform: scale(0.85);
+                transform-origin: center;
+                margin: -30px 0;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 65px 0;
+            }
+
+            .section-header {
+                align-items: start;
+                flex-direction: column;
+            }
+
+            .about-box,
+            .quote-box {
+                padding: 30px;
+            }
+
+            .pdf-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .pdf-actions {
+                width: 100%;
+            }
+
+            .pdf-actions button {
+                flex: 1;
+            }
+
+            .footer-grid {
+                flex-direction: column;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+
+            .logo-text strong {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================= -->
+
+    <header class="navbar">
+        <div class="container nav-inner">
+
+            <button class="logo" onclick="showPage('home')" aria-label="Go to homepage">
+                <span class="logo-mark">♛</span>
+
+                <span class="logo-text">
+                    <small>CERTIFIED</small>
+                    <strong>BACKBENCHER</strong>
+                </span>
+            </button>
+
+            <nav class="nav-links" id="navLinks">
+                <button class="nav-link active" data-page="home" onclick="showPage('home')">
+                    Home
+                </button>
+
+                <button class="nav-link" data-page="subjects" onclick="showPage('subjects')">
+                    Subjects
+                </button>
+
+                <button class="nav-link" data-page="resources" onclick="showPage('resources')">
+                    Resources
+                </button>
+
+                <button class="nav-link" data-page="about" onclick="showPage('about')">
+                    About
+                </button>
+            </nav>
+
+            <div class="nav-actions">
+
+                <button class="icon-btn" onclick="showPage('search')" title="Search">
+                    🔎
+                </button>
+
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
+                    ☀
+                </button>
+
+                <button class="login-btn" onclick="openLogin()">
+                    Login
+                </button>
+
+                <button class="icon-btn hamburger" onclick="toggleMobileMenu()" title="Menu">
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================================
+         HOME PAGE
+    ========================================================= -->
+
+    <main id="home" class="page active">
+
+        <div class="container">
+
+            <section class="hero">
+
+                <div class="hero-copy">
+
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Student-made • Backbench approved
+                    </div>
+
+                    <h1>
+                        Certified
+                        <span class="yellow">Backbencher.</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Notes, assignments and sample questions —
+                        organised without the boring academic energy.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button class="primary-btn" onclick="showPage('subjects')">
+                            Explore Subjects →
+                        </button>
+
+                        <button class="secondary-btn" onclick="surpriseMe()">
+                            Surprise Me ↗
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-art">
+
+                    <div class="scribble a">✦</div>
+                    <div class="scribble b">↗</div>
+
+                    <div class="desk">
+
+                        <div class="laptop">
+
+                            <div class="screen"></div>
+
+                            <div class="keyboard"></div>
+
+                        </div>
+
+                        <div class="notebook">
+                            <strong>TODO:</strong>
+                            <p>
+                                Study<br>
+                                Finish assignment<br>
+                                Don't panic
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="sticker one">
+                        ATTENDANCE<br>
+                        IS OPTIONAL 💀
+                    </div>
+
+                    <div class="sticker two">
+                        BRO,<br>
+                        SEND NOTES?
+                    </div>
+
+                    <div class="sticker three">
+                        LOCK IN.
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STATS -->
+
+            <section class="stats">
+
+                <div class="stat">
+                    <div class="stat-number">07</div>
+                    <div class="stat-text">Subjects</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number">21</div>
+                    <div class="stat-text">Resource sections</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-text">Backbencher energy</div>
+                </div>
+
+            </section>
+
+
+            <!-- SUBJECT PREVIEW -->
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">The academic damage</div>
+                        <h2 class="section-title">
+                            Pick your subject.
+                        </h2>
+                    </div>
+
+                    <p class="section-description">
+                        Everything you need for class, assignments,
+                        revision and those “bro quiz tomorrow?” moments.
+                    </p>
+
+                </div>
+
+                <div class="subjects-grid" id="homeSubjects"></div>
+
+            </section>
+
+
+            <!-- QUOTE -->
+
+            <section class="section">
+
+                <div class="quote-box">
+
+                    <p id="quoteText">
+                        “Kal se pakka padhunga.”
+                    </p>
+
+                    <button class="quote-btn" onclick="newQuote()">
+                        Another excuse →
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         SUBJECTS PAGE
+    ========================================================= -->
+
+    <section id="subjects" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">Subjects</div>
+
+                        <h1 class="section-title">
+                            Your academic survival kit.
+                        </h1>
+                    </div>
+
+                    <p class="section-description">
+                        Seven subjects. Three resource sections each.
+                        No unnecessary academic drama.
+                    </p>
+
+                </div>
+
+                <div class="subjects-grid" id="allSubjects"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SUBJECT DETAIL PAGE
+    ========================================================= -->
+
+    <section id="subjectDetail" class="page">
+
+        <div class="container">
+
+            <section class="subject-hero">
+
+                <button class="back-button" onclick="showPage('subjects')">
+                    ← Back to subjects
+                </button>
+
+                <div id="subjectDetailContent"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         RESOURCE DETAIL PAGE
+    ========================================================= -->
+
+    <section id="resourceDetail" class="page">
+
+        <div class="container">
+
+            <section class="resource-header">
+
+                <button class="back-button" id="resourceBackButton">
+                    ← Back
+                </button>
+
+                <div id="resourceDetailContent"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         RESOURCES DIRECTORY
+    ========================================================= -->
+
+    <section id="resources" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">Resources</div>
+
+                        <h1 class="section-title">
+                            Find the thing you need.
+                        </h1>
+                    </div>
+
+                    <p class="section-description">
+                        Browse notes, assignments and sample questions
+                        across all subjects.
+                    </p>
+
+                </div>
+
+
+                <div class="resource-grid">
+
+                    <div class="resource-card" onclick="browseResource('assignments')">
+
+                        <div class="resource-icon">📝</div>
+
+                        <h3>Assignments</h3>
+
+                        <p>
+                            Class assignments, submission material
+                            and coursework.
+                        </p>
+
+                        <span class="resource-arrow">
+                            Browse assignments →
+                        </span>
+
+                    </div>
+
+
+                    <div class="resource-card" onclick="browseResource('notes')">
+
+                        <div class="resource-icon">📚</div>
+
+                        <h3>Notes</h3>
+
+                        <p>
+                            Lecture notes, revision material
+                            and chapter-wise study content.
+                        </p>
+
+                        <span class="resource-arrow">
+                            Browse notes →
+                        </span>
+
+                    </div>
+
+
+                    <div class="resource-card" onclick="browseResource('questions')">
+
+                        <div class="resource-icon">❓</div>
+
+                        <h3>Sample Questions</h3>
+
+                        <p>
+                            Practice questions for quizzes,
+                            tests and exams.
+                        </p>
+
+                        <span class="resource-arrow">
+                            Browse questions →
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SEARCH PAGE
+    ========================================================= -->
+
+    <section id="search" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">Search</div>
+
+                        <h1 class="section-title">
+                            What are we studying?
+                        </h1>
+                    </div>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <span class="search-icon">🔎</span>
+
+                    <input
+                        id="searchInput"
+                        class="search-input"
+                        type="text"
+                        placeholder="Search PPM, accounting, notes..."
+                        oninput="performSearch()"
+                    >
+
+                </div>
+
+
+                <div id="searchResults"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         ABOUT PAGE
+    ========================================================= -->
+
+    <section id="about" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="about-box">
+
+                    <div class="section-label">
+                        About the backbenchers
+                    </div>
+
+                    <h1>
+                        Built for students.
+                        Powered by backbenchers.
+                    </h1>
+
+                    <p>
+                        Certified Backbencher is a student-made hub
+                        for notes, assignments and sample questions.
+                        It exists for those moments when someone says
+                        “quiz tomorrow” and the entire class suddenly
+                        becomes academically motivated.
+                    </p>
+
+                    <p>
+                        The goal is simple: keep academic material
+                        organised, accessible and actually enjoyable
+                        to use.
+                    </p>
+
+                    <div class="tags">
+
+                        <span class="tag">Student-made</span>
+                        <span class="tag">Exam-ready</span>
+                        <span class="tag">Backbench certified</span>
+                        <span class="tag">Lowkey iconic</span>
+                        <span class="tag">No boring vibes</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         LOGIN MODAL
+    ========================================================= -->
+
+    <div class="modal-overlay" id="loginModal">
+
+        <div class="modal">
+
+            <button class="close-modal" onclick="closeLogin()">
+                ✕
+            </button>
+
+            <h2>Welcome back.</h2>
+
+            <p>
+                Login is prepared for future backend authentication.
+            </p>
+
+            <form onsubmit="fakeLogin(event)">
+
+                <div class="form-group">
+
+                    <label>College Email</label>
+
+                    <input
+                        type="email"
+                        placeholder="you@college.edu"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        placeholder="••••••••"
+                        required
+                    >
+
+                </div>
+
+                <button class="login-submit" type="submit">
+                    Continue
+                </button>
+
+            </form>
+
+            <span class="forgot">
+                Forgot password?
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-brand">
+
+                    <div class="logo">
+
+                        <span class="logo-mark">♛</span>
+
+                        <span class="logo-text">
+                            <small>CERTIFIED</small>
+                            <strong>BACKBENCHER</strong>
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Built for students. Powered by backbenchers.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <button onclick="showPage('home')">
+                        Home
+                    </button>
+
+                    <button onclick="showPage('subjects')">
+                        Subjects
+                    </button>
+
+                    <button onclick="showPage('resources')">
+                        Resources
+                    </button>
+
+                    <button onclick="showPage('about')">
+                        About
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © 2026 Certified Backbencher
+                </span>
+
+                <span>
+                    P.S. Attendance is optional.
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+        /* =========================================================
+           SUBJECT DATA
+        ========================================================= */
+
+        const subjects = [
+
+            {
+                code: "PPM",
+                name: "Principles of Management",
+                description: "Management concepts, functions, principles and organisational basics.",
+                color: "#f6d84a"
+            },
+
+            {
+                code: "BC",
+                name: "Business Communication",
+                description: "Communication skills, business writing, presentations and workplace communication.",
+                color: "#9b7cff"
+            },
+
+            {
+                code: "FA",
+                name: "Financial Accounting",
+                description: "Accounting concepts, journal entries, ledgers, cash books and financial statements.",
+                color: "#7ee787"
+            },
+
+            {
+                code: "BSL",
+                name: "Business Statistics and Logic",
+                description: "Statistics, central tendency, dispersion, probability and logical reasoning.",
+                color: "#67c7ff"
+            },
+
+            {
+                code: "FE",
+                name: "Functional English",
+                description: "Grammar, vocabulary, sentence transformation and practical English communication.",
+                color: "#ff75b5"
+            },
+
+            {
+                code: "IKS",
+                name: "Indian Knowledge System",
+                description: "Indian traditions, knowledge systems, philosophy, science and cultural heritage.",
+                color: "#ff9f68"
+            },
+
+            {
+                code: "EM",
+                name: "Environmental Management",
+                description: "Environment, sustainability, pollution, resources and environmental responsibility.",
+                color: "#7ee787"
+            }
+
+        ];
+
+
+        /* =========================================================
+           RESOURCE TYPES
+        ========================================================= */
+
+        const resourceTypes = {
+
+            assignments: {
+                title: "Assignments",
+                icon: "📝",
+                description: "Class assignments and coursework."
+            },
+
+            notes: {
+                title: "Notes",
+                icon: "📚",
+                description: "Lecture notes and revision material."
+            },
+
+            questions: {
+                title: "Sample Questions",
+                icon: "❓",
+                description: "Questions for quiz and exam practice."
+            }
+
+        };
+
+
+        /* =========================================================
+           SAMPLE RESOURCE DATA
+           
+           IMPORTANT:
+           Replace the empty arrays with your real PDF files later.
+        ========================================================= */
+
+        const resources = {
+
+            // =========================================================
+            // HOW TO ADD A PDF:
+            // Just paste the PDF/link URL inside "url".
+            //
+            // Example:
+            // notes: [
+            //     {
+            //         name: "PPM Unit 1 Notes",
+            //         url: "https://example.com/ppm-unit-1.pdf",
+            //         description: "Unit 1 notes"
+            //     }
+            // ]
+            //
+            // You can add multiple PDFs to the same section by adding
+            // more objects separated with commas.
+            // =========================================================
+
+            PPM: {
+                assignments: [],
+                notes: [
+                     {
+                        name: "PPM Unit 1 — Engaging Handwritten Notes",
+                       url: "https://drive.google.com/file/d/13Cao-8SnOyRB5hm4o3FVdzUKQhJnJvnE/view?usp=drivesdk",
+                        description: "Unit 1 — Principles & Practices of Management"
+                   }
+                ],
+                questions: []
+            },
+
+            BC: {
+                assignments: [],
+                notes: [],
+                questions: []
+            },
+
+            FA: {
+                assignments: [],
+                notes: [
+                  {
+                    name: " Unit-1 Cash Book Ultimate Visuals Notes",
+                    url: "https://drive.google.com/file/d/1Qr-r205PtiWQg1b5B6RvO5mHVi2ZI7Ja/view?usp=drivesdk",
+                    description:"Unit-1 Cash Book Ultimate Visuals"
+
+                  },
+
+                  {
+                    name:" Unit-1 Journal Enteries Ultimate Visual Notes",
+                    url:"https://drive.google.com/file/d/1MrNIztm-1Q7Kl9GH4DMchqLFCVaUTkLA/view?usp=drivesdk",
+                    description:"Unit-1 Journal Enteries Ultimate Visual"
+
+                  },
+                  {
+                    name:"Unit-1 Ledger ultimate visual notes",
+                    url:"https://drive.google.com/file/d/1oNqj_XKdxW_jwxlrXvkCiYyXRhebKokA/view?usp=drivesdk",
+                    description:" Ledger ultimate visual notes"
+                  },
+                  {
+                    name:"Unit-1 Trial Balance ",
+                    url:"https://drive.google.com/file/d/1vJIsehgAH8tWgV1rpBhWWQvYoI3s_a95/view?usp=drivesdk",
+                    description: "Trial Balance Notes"
+                  }
+                ],
+                questions: []
+            },
+
+            BSL: {
+                assignments: [],
+                notes: [],
+                questions: []
+            },
+
+            FE: {
+                assignments: [],
+                notes: [],
+                questions: []
+            },
+
+            IKS: {
+                assignments: [],
+                notes: [],
+                questions: []
+            },
+
+            EM: {
+                assignments: [],
+                notes: [],
+                questions: []
+            }
+
+        };
+
+        
+/* =========================================================
+           CREATE SUBJECT CARD
+        ========================================================= */
+
+        function createSubjectCard(subject) {
+
+            return `
+                <article
+                    class="subject-card"
+                    style="--accent:${subject.color}"
+                    onclick="openSubject('${subject.code}')"
+                >
+
+                    <span class="subject-code">
+                        ${subject.code}
+                    </span>
+
+                    <h3>
+                        ${subject.name}
+                    </h3>
+
+                    <p>
+                        ${subject.description}
+                    </p>
+
+                    <div class="subject-bottom">
+
+                        <span class="resource-count">
+                            3 resource sections
+                        </span>
+
+                        <span class="open-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+                </article>
+            `;
+
+        }
+
+
+        /* =========================================================
+           LOAD SUBJECTS
+        ========================================================= */
+
+        function renderSubjects() {
+
+            const home = document.getElementById("homeSubjects");
+            const all = document.getElementById("allSubjects");
+
+            home.innerHTML = subjects
+                .slice(0, 6)
+                .map(createSubjectCard)
+                .join("");
+
+            all.innerHTML = subjects
+                .map(createSubjectCard)
+                .join("");
+
+        }
+
+
+        /* =========================================================
+           PAGE NAVIGATION
+        ========================================================= */
+
+        function showPage(pageId) {
+
+            document
+                .querySelectorAll(".page")
+                .forEach(page => {
+                    page.classList.remove("active");
+                });
+
+            const page = document.getElementById(pageId);
+
+            if (page) {
+                page.classList.add("active");
+            }
+
+            document
+                .querySelectorAll(".nav-link")
+                .forEach(link => {
+
+                    link.classList.toggle(
+                        "active",
+                        link.dataset.page === pageId
+                    );
+
+                });
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+            closeMobileMenu();
+
+        }
+
+
+        /* =========================================================
+           OPEN SUBJECT
+        ========================================================= */
+
+        function openSubject(code) {
+
+            const subject = subjects.find(
+                item => item.code === code
+            );
+
+            if (!subject) return;
+
+            const content =
+                document.getElementById("subjectDetailContent");
+
+            content.innerHTML = `
+
+                <span
+                    class="subject-hero-code"
+                    style="background:${subject.color}"
+                >
+                    ${subject.code}
+                </span>
+
+                <h1>
+                    ${subject.name}
+                </h1>
+
+                <p>
+                    ${subject.description}
+                </p>
+
+                <div class="resource-grid" style="margin-top:45px">
+
+                    ${createResourceCard(
+                        code,
+                        "assignments"
+                    )}
+
+                    ${createResourceCard(
+                        code,
+                        "notes"
+                    )}
+
+                    ${createResourceCard(
+                        code,
+                        "questions"
+                    )}
+
+                </div>
+            `;
+
+            showPage("subjectDetail");
+
+        }
+
+
+        /* =========================================================
+           CREATE RESOURCE CARD
+        ========================================================= */
+
+        function createResourceCard(
+            subjectCode,
+            resourceType
+        ) {
+
+            const resource = resourceTypes[resourceType];
+
+            return `
+
+                <article
+                    class="resource-card"
+                    onclick="openResource(
+                        '${subjectCode}',
+                        '${resourceType}'
+                    )"
+                >
+
+                    <div class="resource-icon">
+                        ${resource.icon}
+                    </div>
+
+                    <h3>
+                        ${resource.title}
+                    </h3>
+
+                    <p>
+                        ${resource.description}
+                    </p>
+
+                    <span class="resource-arrow">
+                        Open ${resource.title} →
+                    </span>
+
+                </article>
+
+            `;
+
+        }
+
+
+        /* =========================================================
+           OPEN RESOURCE
+        ========================================================= */
+
+        function openResource(
+            subjectCode,
+            resourceType
+        ) {
+
+            const subject = subjects.find(
+                item => item.code === subjectCode
+            );
+
+            const resource = resourceTypes[resourceType];
+
+            if (!subject || !resource) return;
+
+            const content =
+                document.getElementById(
+                    "resourceDetailContent"
+                );
+
+            const files =
+                resources[subjectCode][resourceType] || [];
+
+            let filesHTML = "";
+
+            if (files.length === 0) {
+
+                filesHTML = `
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ${resource.icon}
+                        </div>
+
+                        <h3>
+                            No files uploaded yet.
+                        </h3>
+
+                        <p style="margin-top:10px">
+                            ${resource.title} for
+                            ${subject.name} will appear here
+                            when PDFs are added.
+                        </p>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                filesHTML = `
+
+                    <div class="pdf-list">
+
+                        ${files.map(file => `
+
+                            <div class="pdf-item">
+
+                                <div class="pdf-info">
+
+                                    <div class="pdf-icon">
+                                        PDF
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            ${file.name}
+                                        </strong>
+
+                                        <small>
+                                            ${file.description || "Study material"}
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                                <div class="pdf-actions">
+
+                                    <button
+                                        class="small-btn"
+                                        onclick="viewPDF('${file.url}')"
+                                    >
+                                        View
+                                    </button>
+
+                                    <button
+                                        class="small-btn"
+                                        onclick="copyPDFLink('${file.url}')"
+                                    >
+                                        Copy Link
+                                    </button>
+
+                                    <button
+                                        class="small-btn"
+                                        onclick="downloadPDF(
+                                            '${file.url}',
+                                            '${file.name}'
+                                        )"
+                                    >
+                                        Download
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        `).join("")}
+
+                    </div>
+
+                `;
+
+            }
+
+            content.innerHTML = `
+
+                <div class="breadcrumb">
+                    ${subject.code}
+                    /
+                    ${resource.title}
+                </div>
+
+                <h1>
+                    ${resource.icon}
+                    ${resource.title}
+                </h1>
+
+                <p style="
+                    color:var(--muted);
+                    margin-top:15px;
+                    max-width:650px;
+                    line-height:1.6;
+                ">
+                    ${subject.name}
+                    —
+                    ${resource.description}
+                </p>
+
+                <div style="margin-top:40px">
+                    ${filesHTML}
+                </div>
+
+            `;
+
+            document.getElementById(
+                "resourceBackButton"
+            ).onclick = () => openSubject(subjectCode);
+
+            showPage("resourceDetail");
+
+        }
+
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        function performSearch() {
+
+            const query =
+                document
+                    .getElementById("searchInput")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+            const container =
+                document.getElementById("searchResults");
+
+            if (!query) {
+
+                container.innerHTML = `
+                    <div class="empty">
+                        <div class="empty-icon">🔎</div>
+                        <p>
+                            Start typing to search subjects
+                            and resources.
+                        </p>
+                    </div>
+                `;
+
+                return;
+            }
+
+            const results = [];
+
+            subjects.forEach(subject => {
+
+                const subjectMatch =
+                    subject.code.toLowerCase().includes(query) ||
+                    subject.name.toLowerCase().includes(query) ||
+                    subject.description.toLowerCase().includes(query);
+
+                if (subjectMatch) {
+
+                    results.push({
+                        type: "Subject",
+                        title: `${subject.code} — ${subject.name}`,
+                        action: () => openSubject(subject.code)
+                    });
+
+                }
+
+                Object.entries(resourceTypes).forEach(
+                    ([key, resource]) => {
+
+                        if (
+                            resource.title.toLowerCase().includes(query) ||
+                            resource.description.toLowerCase().includes(query)
+                        ) {
+
+                            results.push({
+                                type: subject.code,
+                                title: `${subject.code} — ${resource.title}`,
+                                action: () => openResource(
+                                    subject.code,
+                                    key
+                                )
+                            });
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+            if (results.length === 0) {
+
+                container.innerHTML = `
+                    <div class="empty">
+                        <div class="empty-icon">💀</div>
+                        <h3>No results.</h3>
+                        <p style="margin-top:8px">
+                            Try “PPM”, “accounting”,
+                            “notes” or “statistics”.
+                        </p>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            container.innerHTML = `
+                <div class="search-results">
+                    ${results.map(
+                        (result, index) => `
+                            <div
+                                class="search-result"
+                                onclick="searchOpen(${index})"
+                            >
+                                <div>
+                                    <strong>
+                                        ${result.title}
+                                    </strong>
+                                </div>
+
+                                <small>
+                                    ${result.type} →
+                                </small>
+                            </div>
+                        `
+                    ).join("")}
+                </div>
+            `;
+
+            window.currentSearchResults = results;
+
+        }
+
+
+        function searchOpen(index) {
+
+            if (
+                window.currentSearchResults &&
+                window.currentSearchResults[index]
+            ) {
+
+                window.currentSearchResults[index].action();
+
+            }
+
+        }
+
+
+        /* =========================================================
+           RESOURCE DIRECTORY FILTER
+        ========================================================= */
+
+        function browseResource(type) {
+
+            showPage("subjects");
+
+            setTimeout(() => {
+
+                const resource = resourceTypes[type];
+
+                const all =
+                    document.getElementById("allSubjects");
+
+                all.innerHTML = subjects
+                    .map(subject => {
+
+                        return `
+                            <article
+                                class="resource-card"
+                                onclick="openResource(
+                                    '${subject.code}',
+                                    '${type}'
+                                )"
+                            >
+
+                                <div class="resource-icon">
+                                    ${resource.icon}
+                                </div>
+
+                                <h3>
+                                    ${subject.code}
+                                </h3>
+
+                                <p>
+                                    ${subject.name}
+                                </p>
+
+                                <span class="resource-arrow">
+                                    ${resource.title} →
+                                </span>
+
+                            </article>
+                        `;
+
+                    })
+                    .join("");
+
+            }, 50);
+
+        }
+
+
+        /* =========================================================
+           SURPRISE ME
+        ========================================================= */
+
+        function surpriseMe() {
+
+            const randomIndex =
+                Math.floor(
+                    Math.random() * subjects.length
+                );
+
+            openSubject(
+                subjects[randomIndex].code
+            );
+
+        }
+
+
+        /* =========================================================
+           QUOTES
+        ========================================================= */
+
+        const quotes = [
+
+            "“Kal se pakka padhunga.”",
+
+            "“Bro, notes bhej na.”",
+
+            "“Attendance? What's that?”",
+
+            "“One last question.”",
+
+            "“Assignment kab submit karna hai?”",
+
+            "“Lock in bro.”",
+
+            "“Sir, network issue tha.”",
+
+            "“Exam toh easy hi hoga.”"
+
+        ];
+
+
+        function newQuote() {
+
+            const random =
+                Math.floor(
+                    Math.random() * quotes.length
+                );
+
+            document.getElementById(
+                "quoteText"
+            ).textContent = quotes[random];
+
+        }
+
+
+        /* =========================================================
+           DARK / LIGHT MODE
+        ========================================================= */
+
+        function toggleTheme() {
+
+            document.body.classList.toggle("light");
+
+            const light =
+                document.body.classList.contains("light");
+
+            localStorage.setItem(
+                "cb-theme",
+                light ? "light" : "dark"
+            );
+
+        }
+
+
+        function loadTheme() {
+
+            const saved =
+                localStorage.getItem("cb-theme");
+
+            if (saved === "light") {
+
+                document.body.classList.add("light");
+
+            }
+
+        }
+
+
+        /* =========================================================
+           LOGIN
+        ========================================================= */
+
+        function openLogin() {
+
+            document
+                .getElementById("loginModal")
+                .classList.add("open");
+
+        }
+
+
+        function closeLogin() {
+
+            document
+                .getElementById("loginModal")
+                .classList.remove("open");
+
+        }
+
+
+        function fakeLogin(event) {
+
+            event.preventDefault();
+
+            alert(
+                "Login UI is ready. Connect this form to your backend/authentication system when you add one."
+            );
+
+            closeLogin();
+
+        }
+
+
+        /* =========================================================
+           MOBILE MENU
+        ========================================================= */
+
+        function toggleMobileMenu() {
+
+            document
+                .getElementById("navLinks")
+                .classList.toggle("open");
+
+        }
+
+
+        function closeMobileMenu() {
+
+            document
+                .getElementById("navLinks")
+                .classList.remove("open");
+
+        }
+
+
+        /* =========================================================
+           COPY PDF LINK
+        ========================================================= */
+
+        async function copyPDFLink(url) {
+
+            if (!url) return;
+
+            try {
+
+                await navigator.clipboard.writeText(url);
+
+                alert("PDF link copied!");
+
+            } catch (error) {
+
+                window.prompt(
+                    "Copy this PDF link:",
+                    url
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           PDF FUNCTIONS
+        ========================================================= */
+
+        function viewPDF(url) {
+
+            if (!url) return;
+
+            window.open(
+                url,
+                "_blank"
+            );
+
+        }
+
+
+        function downloadPDF(url, filename) {
+
+            if (!url) return;
+
+            // Browsers may block forced downloads from external URLs.
+            // If that happens, the PDF simply opens in a new tab.
+            const link =
+                document.createElement("a");
+
+            link.href = url;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.download = filename || "";
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+        }
+
+
+        /* =========================================================
+           CLOSE MODAL WHEN CLICKING OUTSIDE
+        ========================================================= */
+
+        document
+            .getElementById("loginModal")
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        closeLogin();
+
+                    }
+
+                }
+            );
+
+
+        /* =========================================================
+           KEYBOARD SHORTCUT
+        ========================================================= */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "/" &&
+                    document.activeElement.tagName !== "INPUT"
+                ) {
+
+                    event.preventDefault();
+
+                    showPage("search");
+
+                    setTimeout(() => {
+
+                        document
+                            .getElementById("searchInput")
+                            .focus();
+
+                    }, 100);
+
+                }
+
+                if (event.key === "Escape") {
+
+                    closeLogin();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           INITIALISE WEBSITE
+        ========================================================= */
+
+        renderSubjects();
+
+        loadTheme();
+
+    </script>
+
+</body>
+</html>
