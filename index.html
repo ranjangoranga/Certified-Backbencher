@@ -1765,48 +1765,16 @@
                 ✕
             </button>
 
-            <h2>Welcome back.</h2>
-
-            <p>
-                Login is prepared for future backend authentication.
-            </p>
-
-            <form onsubmit="fakeLogin(event)">
-
-                <div class="form-group">
-
-                    <label>College Email</label>
-
-                    <input
-                        type="email"
-                        placeholder="you@college.edu"
-                        required
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Password</label>
-
-                    <input
-                        type="password"
-                        placeholder="••••••••"
-                        required
-                    >
-
-                </div>
-
-                <button class="login-submit" type="submit">
-                    Continue
-                </button>
-
+            <h2 id="authTitle">Welcome back.</h2>
+            <p id="authMessage" role="status" aria-live="polite">Log in to your student account.</p>
+            <form id="authForm" onsubmit="submitAuth(event)">
+                <div class="form-group" id="nameGroup" hidden><label for="authName">Your name</label><input id="authName" maxlength="100" autocomplete="name"></div>
+                <div class="form-group"><label for="authEmail">Email</label><input id="authEmail" type="email" required autocomplete="email"></div>
+                <div class="form-group"><label for="authPassword">Password</label><input id="authPassword" type="password" required maxlength="128" autocomplete="current-password"></div>
+                <div id="signupScope" hidden><p>Your selected course and semester above will be saved to your account.</p></div>
+                <button class="login-submit" id="authSubmit" type="submit">Log in</button>
             </form>
-
-            <span class="forgot">
-                Forgot password?
-            </span>
-
+            <button type="button" class="small-btn" style="margin-top:16px" id="authToggle" onclick="toggleAuth()">Create an account</button>
         </div>
 
     </div>
@@ -1892,7 +1860,7 @@
            SUBJECT DATA
         ========================================================= */
 
-        const subjects = [
+        let subjects = [
 
             {
                 code: "PPM",
@@ -1980,220 +1948,8 @@
            Replace the empty arrays with your real PDF files later.
         ========================================================= */
 
-        const resources = {
+        let resources = {};
 
-            // =========================================================
-            // HOW TO ADD A PDF:
-            // Just paste the PDF/link URL inside "url".
-            //
-            // Example:
-            // notes: [
-            //     {
-            //         name: "PPM Unit 1 Notes",
-            //         url: "https://example.com/ppm-unit-1.pdf",
-            //         description: "Unit 1 notes"
-            //     }
-            // ]
-            //
-            // You can add multiple PDFs to the same section by adding
-            // more objects separated with commas.
-            // =========================================================
-
-            PPM: {
-                assignments: [
-                    {
-                        name: "PPM Assignment on leadership",
-                        url: "https://drive.google.com/drive/folders/19yT0kmLd3sT5G6KYWy3e6MAJNZ_Mm9ug",
-                        description: "12 premade ppt",
-                    }
-                ],
-                notes: [
-                     {
-                        name: "PPM Unit 1 — Engaging Handwritten Notes",
-                       url: "https://drive.google.com/file/d/13Cao-8SnOyRB5hm4o3FVdzUKQhJnJvnE/view?usp=drivesdk",
-                        description: "Unit 1 — Principles & Practices of Management"
-                   },
-                    {
-                        name: "PPM unit 2 planning - Detailed Handwritten Note",
-                        url: "https://drive.google.com/file/d/1yWdJQ3huoro0-HI5bcWOTso6w4w1DQ-E/view?usp=drivesdk",
-                        description: "PPM unit 2 - planning"
-                    },
-                    {
-                        name: "Detailed Note of PPM unit 1",
-                        url: "https://drive.google.com/file/d/1kbO4dEPLY7cr5b7Z6eEoiPaqKIoqEKwQ/view?usp=drivesdk",
-                        description: "Handwritten deatailed note for PPM unit 1",
-                    },
-                    {
-                        name: "Detailed Note of PPM unit 2",
-                        url: "https://drive.google.com/file/d/19hol-pXZVsMaPYIzKcqrsXGP-FnI7XkF/view?usp=drivesdk",
-                        description: "Handwritten detailed Note of PPM unit 2",
-                    }
-                ],
-                questions: [
-                    {
-                        name: "PPM Sample Part 1 For midterm",
-                        url: "https://drive.google.com/file/d/1OzbmjG-MImdyccnCR5yjrSYxrf8uJnWg/view?usp=drivesdk",
-                        description: "QUESTION",
-                    },
-                    {
-                        name: "PPM Sample Part 2 For Midterm",
-                        url: "https://drive.google.com/file/d/1rKNzoVxgxxCEDwcS_zU7N9q5DhX5seaQ/view?usp=drivesdk",
-                        description: "QUESTION",
-                    }
-                ]
-            },
-
-            BC: {
-                assignments: [],
-                notes: [
-                    {
-                        name: "Cover Letter note",
-                        url: "https://drive.google.com/file/d/1p88aENHKvVkpJa1N344xi4N0cDyFNrBf/view?usp=drivesdk",
-                        description: "Handwritten Notes of cover letter",
-                    },
-                    {
-                        name: "Tender/Quotation Letter Notes",
-                        url: "https://drive.google.com/file/d/1AwEd3q7t8qq_8daKxG7JY0tReRycPWeJ/view?usp=drivesdk",
-                        description: "Handeritten Note of Tender/Quotation notes",
-                    },
-                    {
-                        name: "Complaint Letter Notes",
-                        url: "https://drive.google.com/file/d/1z-P1AKrIFR-4KNonuR_mIob9uwn0rFKv/view?usp=drivesdk",
-                        description: "Hamdwritten Notes of Complaint Letter"
-                    },
-                    {
-                        name: "BC notes for Midterm",
-                        url: "https://drive.google.com/file/d/1157zMW3EGaMyp_XTXeaIcaDsnRNZtOde/view?usp=drivesdk",
-                        description: "Hamdwritten note for BC for midterm",
-                    }
-                ],
-                questions: []
-            },
-
-            FA: {
-                assignments: [],
-                notes: [
-                  {
-                    name: " Unit-1 Cash Book Ultimate Visuals Notes",
-                    url: "https://drive.google.com/file/d/1Qr-r205PtiWQg1b5B6RvO5mHVi2ZI7Ja/view?usp=drivesdk",
-                    description:"Unit-1 Cash Book Ultimate Visuals"
-
-                  },
-
-                  {
-                    name:" Unit-1 Journal Enteries Ultimate Visual Notes",
-                    url:"https://drive.google.com/file/d/1MrNIztm-1Q7Kl9GH4DMchqLFCVaUTkLA/view?usp=drivesdk",
-                    description:"Unit-1 Journal Enteries Ultimate Visual"
-
-                  },
-                  {
-                    name:"Unit-1 Ledger ultimate visual notes",
-                    url:"https://drive.google.com/file/d/1oNqj_XKdxW_jwxlrXvkCiYyXRhebKokA/view?usp=drivesdk",
-                    description:" Ledger ultimate visual notes"
-                  },
-                  {
-                    name:"Unit-1 Trial Balance ",
-                    url:"https://drive.google.com/file/d/1vJIsehgAH8tWgV1rpBhWWQvYoI3s_a95/view?usp=drivesdk",
-                    description: "Trial Balance Notes"
-                  }
-                ],
-                questions: [
-                    {
-                        name: "Practice Question of FA For Midterm",
-                        url: "https://drive.google.com/file/d/15VPC48189Sq_SgqfFXmo7t2bE7AKRrf6/view?usp=drivesdk",
-                        description: "QUESTION",
-                    }
-                ]
-            },
-
-            BSL: {
-                assignments: [],
-                notes: [
-                    {
-                        name: "Introduction to Statistics Note",
-                        url: "https://drive.google.com/file/d/17rd2-0Ow6IQyVrRMvdWltTloLF0xrfk3/view?usp=drivesdk",
-                        description: "Handwritten notes of Introduction to Statistics",
-                    },
-                    {
-                        name: "Data Classification Tabulation and Presentation",
-                        url: "https://drive.google.com/file/d/13g6_yOlCGLcWHkiyc4KIumWg6Wb1-eEd/view?usp=drivesdk",
-                        description: "Handwritten note of data classification and presentation",
-                    },
-                    {
-                        name: "Measures of Central Tendency",
-                        url: "https://drive.google.com/file/d/17A4CiMIFd46agh1kOZ9Qag18190VLQy8/view?usp=drivesdk",
-                        description: "Handwritten notes of measures of central tendency",
-                    },
-                    {
-                        name: "Skewness and Kurtosis",
-                        url: "https://drive.google.com/file/d/1YyHnH0dAZyWb22Lcg4M8nurUMuZwicHz/view?usp=drivesdk",
-                        description: "Handwritten skewness and kurtosis",
-                    },
-                    {
-                        name: "Measures of Dispersion",
-                        url: "https://drive.google.com/file/d/1UTjhohLwmcpN7iBEoE1dQyU1_uQ9XAaE/view?usp=drivesdk",
-                        description: "Handwritten notes of measures of dispersion",
-                    }
-                ],
-                questions: [
-                    {
-                        name: "Practice Question of BSL For Midterm",
-                        url: "https://drive.google.com/file/d/1-DoxoAcrz9ny51BdOdG1oIW8gmDpA3yt/view?usp=drivesdk",
-                        description: "QUESTIONS",
-                    }
-                ]
-            },
-
-            FE: {
-                assignments: [],
-                notes: [
-                    {
-                        name: "FE notes For Midtream",
-                        url: "https://drive.google.com/file/d/1rnvnaG-HzG5RWkPHXnOHFcwzTks6aRXU/view?usp=drivesdk",
-                        description: "Handwritten FE note for midtream",
-                    }
-                        
-                ],
-                questions: []
-            },
-
-            IKS: {
-                assignments: [],
-                notes: [
-                    {
-                        name: "IKS Mid Sem Notes",
-                        url: "https://drive.google.com/file/d/1MWlaWrnxn6qRoS-JxsY-8kmxp1-he81L/view?usp=drivesdk",
-                        description: "IKS Handwritten Notes For Midsem",
-                    },
-                    {
-                        name: "IKS Detailed Notes for Midterm",
-                        url: "https://drive.google.com/file/d/1396JX3PV0gSDGUpk15QtKWn4kpVR3kRu/view?usp=drivesdk",
-                        description: "Handwritten IKS detailed notes for midterm",
-                    }
-                ],
-                questions: []
-            },
-
-            EM: {
-                assignments: [],
-                notes: [
-                    {
-                        name: "EM Handwritten Notes for mid term",
-                        url: "https://drive.google.com/file/d/1DCROESDNmXe9yC7wTCAXnC8jvetpRCU4/view?usp=drivesdk",
-                        description: "Handwritten notes of EM for mid term",
-                    },
-                    {
-                        name: "EM Note Part2 for midterm",
-                        url: "https://drive.google.com/file/d/1OBjmmexUHVFmrwMfNWk1HpIGKiiNJzJ5/view?usp=drivesdk",
-                        description: "QUESTION",
-                    }
-                ],
-                questions: []
-            }
-
-        };
-
-        
 /* =========================================================
            CREATE SUBJECT CARD
         ========================================================= */
@@ -2212,11 +1968,11 @@
                     </span>
 
                     <h3>
-                        ${subject.name}
+                        ${escapeHTML(subject.name)}
                     </h3>
 
                     <p>
-                        ${subject.description}
+                        ${escapeHTML(subject.description)}
                     </p>
 
                     <div class="subject-bottom">
@@ -2322,11 +2078,11 @@
                 </span>
 
                 <h1>
-                    ${subject.name}
+                    ${escapeHTML(subject.name)}
                 </h1>
 
                 <p>
-                    ${subject.description}
+                    ${escapeHTML(subject.description)}
                 </p>
 
                 <div class="resource-grid" style="margin-top:45px">
@@ -2441,7 +2197,7 @@
 
                         <p style="margin-top:10px">
                             ${resource.title} for
-                            ${subject.name} will appear here
+                            ${escapeHTML(subject.name)} will appear here
                             when PDFs are added.
                         </p>
 
@@ -2462,16 +2218,16 @@
                                 <div class="pdf-info">
 
                                     <div class="pdf-icon">
-                                        PDF
+                                        ${file.mime === "application/pdf" ? "PDF" : "PPTX"}
                                     </div>
 
                                     <div>
                                         <strong>
-                                            ${file.name}
+                                            ${escapeHTML(file.name)}
                                         </strong>
 
                                         <small>
-                                            ${file.description || "Study material"}
+                                            ${escapeHTML(file.description || "Study material")}
                                         </small>
                                     </div>
 
@@ -2497,7 +2253,7 @@
                                         class="small-btn"
                                         onclick="downloadPDF(
                                             '${file.url}',
-                                            '${file.name}'
+                                            'material.pdf'
                                         )"
                                     >
                                         Download
@@ -2534,7 +2290,7 @@
                     max-width:650px;
                     line-height:1.6;
                 ">
-                    ${subject.name}
+                    ${escapeHTML(subject.name)}
                     —
                     ${resource.description}
                 </p>
@@ -2604,6 +2360,12 @@
 
                 }
 
+                Object.values(resources[subject.code] || {}).flat().forEach(file => {
+                    if ((file.name + ' ' + file.description).toLowerCase().includes(query)) {
+                        results.push({type: subject.code, title: file.name, action: () => viewPDF(file.url)});
+                    }
+                });
+
                 Object.entries(resourceTypes).forEach(
                     ([key, resource]) => {
 
@@ -2656,7 +2418,7 @@
                             >
                                 <div>
                                     <strong>
-                                        ${result.title}
+                                        ${escapeHTML(result.title)}
                                     </strong>
                                 </div>
 
@@ -2724,7 +2486,7 @@
                                 </h3>
 
                                 <p>
-                                    ${subject.name}
+                                    ${escapeHTML(subject.name)}
                                 </p>
 
                                 <span class="resource-arrow">
@@ -2854,19 +2616,6 @@
         }
 
 
-        function fakeLogin(event) {
-
-            event.preventDefault();
-
-            alert(
-                "Login UI is ready. Connect this form to your backend/authentication system when you add one."
-            );
-
-            closeLogin();
-
-        }
-
-
         /* =========================================================
            MOBILE MENU
         ========================================================= */
@@ -2899,7 +2648,7 @@
 
             try {
 
-                await navigator.clipboard.writeText(url);
+                await navigator.clipboard.writeText(new URL(url, location.origin).href);
 
                 alert("PDF link copied!");
 
@@ -2907,7 +2656,7 @@
 
                 window.prompt(
                     "Copy this PDF link:",
-                    url
+                    new URL(url, location.origin).href
                 );
 
             }
@@ -2940,7 +2689,7 @@
             const link =
                 document.createElement("a");
 
-            link.href = url;
+            link.href = url + (url.includes("?") ? "&" : "?") + "download=1";
             link.target = "_blank";
             link.rel = "noopener noreferrer";
             link.download = filename || "";
@@ -3015,11 +2764,12 @@
            INITIALISE WEBSITE
         ========================================================= */
 
-        renderSubjects();
+        // Initialized after the catalog has loaded.
 
         loadTheme();
 
     </script>
 
+<script src="/client.js"></script>
 </body>
 </html>

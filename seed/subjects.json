@@ -1,0 +1,44 @@
+[
+  {
+    "code": "PPM",
+    "name": "Principles of Management",
+    "description": "Management concepts, functions, principles and organisational basics.",
+    "color": "#f6d84a"
+  },
+  {
+    "code": "BC",
+    "name": "Business Communication",
+    "description": "Communication skills, business writing, presentations and workplace communication.",
+    "color": "#9b7cff"
+  },
+  {
+    "code": "FA",
+    "name": "Financial Accounting",
+    "description": "Accounting concepts, journal entries, ledgers, cash books and financial statements.",
+    "color": "#7ee787"
+  },
+  {
+    "code": "BSL",
+    "name": "Business Statistics and Logic",
+    "description": "Statistics, central tendency, dispersion, probability and logical reasoning.",
+    "color": "#67c7ff"
+  },
+  {
+    "code": "FE",
+    "name": "Functional English",
+    "description": "Grammar, vocabulary, sentence transformation and practical English communication.",
+    "color": "#ff75b5"
+  },
+  {
+    "code": "IKS",
+    "name": "Indian Knowledge System",
+    "description": "Indian traditions, knowledge systems, philosophy, science and cultural heritage.",
+    "color": "#ff9f68"
+  },
+  {
+    "code": "EM",
+    "name": "Environmental Management",
+    "description": "Environment, sustainability, pollution, resources and environmental responsibility.",
+    "color": "#7ee787"
+  }
+]
