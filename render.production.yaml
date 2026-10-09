@@ -1,0 +1,26 @@
+# Proposed production deployment. Applying this creates paid resources.
+# Rename to render.yaml only after the hosting plan is approved.
+services:
+  - type: web
+    name: certified-backbencher
+    runtime: python
+    repo: https://github.com/ranjangoranga/Certified-Backbencher
+    branch: backend-database-auth
+    region: singapore
+    plan: starter
+    numInstances: 1
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120 app:app
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.14
+      - key: DATABASE_PATH
+        value: /var/data/site.sqlite3
+      - key: COOKIE_SECURE
+        value: "1"
+    disk:
+      name: study-database
+      mountPath: /var/data
+      sizeGB: 1
