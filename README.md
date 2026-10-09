@@ -1,4 +1,6 @@
-# Certified Backbencher
+# Certified Backbenchers
+
+**Hosting on Hostinger VPS? Start with [HOSTINGER_SETUP.md](HOSTINGER_SETUP.md).** It includes the project download, private file import, Docker setup, HTTPS, administrator account and update commands.
 
 The existing website now runs with a Python/Flask backend and a SQLite database. Students can register, log in and log out. Accounts save their course, year and semester. Notes remain publicly accessible, matching the original website; account information is private. The catalog supports BBA and BCA years 1–3 and MCA years 1–2. Only the supplied BBA first-year semester-one subjects/materials are seeded; other semesters honestly show an empty state until an administrator supplies them.
 
