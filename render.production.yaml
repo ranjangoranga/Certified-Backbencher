@@ -2,7 +2,7 @@
 # Rename to render.yaml only after the hosting plan is approved.
 services:
   - type: web
-    name: firfar-adventure
+    name: certified-backbenchers
     runtime: python
     repo: https://github.com/ranjangoranga/Certified-Backbencher
     branch: backend-database-auth
