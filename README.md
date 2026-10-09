@@ -20,7 +20,7 @@ Open http://127.0.0.1:8000. On Windows, activate with `.venv\Scripts\activate` i
 
 The separate private migration archive contains the original bytes of 26 PDFs and 12 PPTX leadership presentations from the links in the original website (38 files, approximately 43 MB). Their titles and subject/category grouping are retained. After extracting the private archive, `seed/materials/*.bin` are original documents; the accompanying JSON records store their metadata. Seeding validates document signatures, hashes their contents, and inserts the full bytes as database BLOBs. Downloads use `/api/materials/<id>` and do not require Google Drive. PPTX files download as presentations; PDF files can be viewed in the browser. Source files in Drive have not been deleted or modified.
 
-Extract Certified_Backbencher_Materials.zip into the repository directory first. It contains `seed/materials/` and no student accounts. The study-file contents are intentionally excluded from the public code repository. Run seeding once on a new installation. It is idempotent: subsequent runs preserve accounts and existing materials. Future PDF uploads go directly into the database, with no Drive link needed. `seed/legacy-resources.json` is only the migration audit record, never a runtime dependency.
+Extract Certified_Backbencher_Materials.zip into the repository directory first. It contains `seed/materials/` and no student accounts. The study-file contents are intentionally excluded from the public code repository. Run seeding once on a new installation. It is idempotent: subsequent runs preserve accounts and existing materials. Future PDF uploads go directly into the database, with no Drive link needed.
 
 ## Administrator
 
@@ -34,11 +34,13 @@ Log in with that account to see **Manage materials**. Choose a course/year/semes
 
 ## Production hosting
 
-A static host such as GitHub Pages cannot run this backend. Deploy the Dockerfile to a Python/container host with HTTPS and a **persistent disk** mounted at `/data`. The container uses Gunicorn, `DATABASE_PATH=/data/site.sqlite3`, and `COOKIE_SECURE=1`. Configure the host to forward requests to port 8000. Seed the database on the mounted persistent disk before opening the website to students:
+A static host such as GitHub Pages cannot run this backend. Deploy the Dockerfile to a Python/container host with HTTPS and a **persistent disk** mounted at `/data`. The container uses Gunicorn, `DATABASE_PATH=/data/site.sqlite3`, and `COOKIE_SECURE=1`. Configure the host to forward requests to port 8000. For Docker, extract the private migration archive into the mounted disk so its files appear at `/data/seed/materials`. Seed before opening the website to students:
 
 ```bash
-python scripts/manage.py seed
+python scripts/manage.py seed --materials /data/seed/materials
 ```
+
+Run this inside the container with the same `/data` mount that the web container will use. The private study files are excluded from the image build; students receive them from the database after seeding.
 
 For a non-Docker deployment, set `DATABASE_PATH` to a persistent absolute path, set `COOKIE_SECURE=1` under HTTPS, install requirements, seed, and run:
 
@@ -56,3 +58,6 @@ python -m unittest discover -s tests -v
 ```
 
 Back up regularly to a private location outside the server. The database contains private accounts and sessions: never commit it to GitHub or expose it through static serving. Passwords are hashed with Werkzeug scrypt. Session cookies are HttpOnly and SameSite, and only hashed session tokens are stored. Mutations check CSRF tokens and request origin. Login/registration attempts are rate limited using SQLite. Configure the host's edge request limits as well. There is no email verification or self-service password reset yet; these need an email provider. This change does not implement the planned AI/RAG assistant.
+
+Validation also includes a DOM integration check of the existing UI: catalog loading, PPM PDF listings, registration, logout and the MCA empty state passed without JavaScript runtime errors. A visual browser check was unavailable in the execution environment.
+
