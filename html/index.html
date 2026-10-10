@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Certified Backbencher — student notes, assignments and sample questions.">
+    <title>Certified Backbencher</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/features.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================= -->
+
+    <header class="navbar">
+        <div class="container nav-inner">
+
+            <button class="logo" onclick="showPage('home')" aria-label="Go to homepage">
+                <span class="logo-mark">♛</span>
+
+                <span class="logo-text">
+                    <small>CERTIFIED</small>
+                    <strong>BACKBENCHER</strong>
+                </span>
+            </button>
+
+            <nav class="nav-links" id="navLinks">
+                <button class="nav-link active" data-page="home" onclick="showPage('home')">
+                    Home
+                </button>
+
+                <button class="nav-link" data-page="subjects" onclick="showPage('subjects')">
+                    Subjects
+                </button>
+
+                <button class="nav-link" data-page="resources" onclick="showPage('resources')">
+                    Resources
+                </button>
+
+                <button class="nav-link" data-page="about" onclick="showPage('about')">
+                    About
+                </button>
+            </nav>
+
+            <div class="nav-actions">
+
+                <button class="icon-btn" onclick="showPage('search')" title="Search">
+                    🔎
+                </button>
+
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
+                    ☀
+                </button>
+
+                <button id="accountNav" class="login-btn" onclick="openLogin()">
+                    Login
+                </button>
+
+                <button class="icon-btn hamburger" onclick="toggleMobileMenu()" title="Menu">
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================================
+         HOME PAGE
+    ========================================================= -->
+
+    <main id="home" class="page active">
+
+        <div class="container">
+
+            <section class="hero">
+
+                <div class="hero-copy">
+
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Student-made • Backbench approved
+                    </div>
+
+                    <h1>
+                        Certified
+                        <span class="yellow">Backbencher.</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Notes, assignments and sample questions —
+                        organised without the boring academic energy.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button class="primary-btn" onclick="showPage('subjects')">
+                            Explore Subjects →
+                        </button>
+
+                        <button class="secondary-btn" onclick="surpriseMe()">
+                            Surprise Me ↗
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-art">
+
+                    <div class="scribble a">✦</div>
+                    <div class="scribble b">↗</div>
+
+                    <div class="desk">
+
+                        <div class="laptop">
+
+                            <div class="screen"></div>
+
+                            <div class="keyboard"></div>
+
+                        </div>
+
+                        <div class="notebook">
+                            <strong>TODO:</strong>
+                            <p>
+                                Study<br>
+                                Finish assignment<br>
+                                Don't panic
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="sticker one">
+                        ATTENDANCE<br>
+                        IS OPTIONAL 💀
+                    </div>
+
+                    <div class="sticker two">
+                        BRO,<br>
+                        SEND NOTES?
+                    </div>
+
+                    <div class="sticker three">
+                        LOCK IN.
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STATS -->
+
+            <section class="stats">
+
+                <div class="stat">
+                    <div class="stat-number">07</div>
+                    <div class="stat-text">Subjects</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number">21</div>
+                    <div class="stat-text">Resource sections</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-text">Backbencher energy</div>
+                </div>
+
+            </section>
+
+
+            <!-- SUBJECT PREVIEW -->
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">The academic damage</div>
+                        <h2 class="section-title">
+                            Pick your subject.
+                        </h2>
+                    </div>
+
+                    <p class="section-description">
+                        Everything you need for class, assignments,
+                        revision and those “bro quiz tomorrow?” moments.
+                    </p>
+
+                </div>
+
+                <div class="subjects-grid" id="homeSubjects"></div>
+
+            </section>
+
+
+            <!-- QUOTE -->
+
+            <section class="section">
+
+                <div class="quote-box">
+
+                    <p id="quoteText">
+                        “Kal se pakka padhunga.”
+                    </p>
+
+                    <button class="quote-btn" onclick="newQuote()">
+                        Another excuse →
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         SUBJECTS PAGE
+    ========================================================= -->
+
+    <section id="subjects" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">Subjects</div>
+
+                        <h1 class="section-title">
+                            Your academic survival kit.
+                        </h1>
+                    </div>
+
+                    <p class="section-description">
+                        Seven subjects. Three resource sections each.
+                        No unnecessary academic drama.
+                    </p>
+
+                </div>
+
+                <div class="subjects-grid" id="allSubjects"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SUBJECT DETAIL PAGE
+    ========================================================= -->
+
+    <section id="subjectDetail" class="page">
+
+        <div class="container">
+
+            <section class="subject-hero">
+
+                <button class="back-button" onclick="showPage('subjects')">
+                    ← Back to subjects
+                </button>
+
+                <div id="subjectDetailContent"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         RESOURCE DETAIL PAGE
+    ========================================================= -->
+
+    <section id="resourceDetail" class="page">
+
+        <div class="container">
+
+            <section class="resource-header">
+
+                <button class="back-button" id="resourceBackButton">
+                    ← Back
+                </button>
+
+                <div id="resourceDetailContent"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         RESOURCES DIRECTORY
+    ========================================================= -->
+
+    <section id="resources" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">Resources</div>
+
+                        <h1 class="section-title">
+                            Find the thing you need.
+                        </h1>
+                    </div>
+
+                    <p class="section-description">
+                        Browse notes, assignments and sample questions
+                        across all subjects.
+                    </p>
+
+                </div>
+
+
+                <div class="resource-grid">
+
+                    <div class="resource-card" onclick="browseResource('assignments')">
+
+                        <div class="resource-icon">📝</div>
+
+                        <h3>Assignments</h3>
+
+                        <p>
+                            Class assignments, submission material
+                            and coursework.
+                        </p>
+
+                        <span class="resource-arrow">
+                            Browse assignments →
+                        </span>
+
+                    </div>
+
+
+                    <div class="resource-card" onclick="browseResource('notes')">
+
+                        <div class="resource-icon">📚</div>
+
+                        <h3>Notes</h3>
+
+                        <p>
+                            Lecture notes, revision material
+                            and chapter-wise study content.
+                        </p>
+
+                        <span class="resource-arrow">
+                            Browse notes →
+                        </span>
+
+                    </div>
+
+
+                    <div class="resource-card" onclick="browseResource('questions')">
+
+                        <div class="resource-icon">❓</div>
+
+                        <h3>Sample Questions</h3>
+
+                        <p>
+                            Practice questions for quizzes,
+                            tests and exams.
+                        </p>
+
+                        <span class="resource-arrow">
+                            Browse questions →
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SEARCH PAGE
+    ========================================================= -->
+
+    <section id="search" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <div class="section-label">Search</div>
+
+                        <h1 class="section-title">
+                            What are we studying?
+                        </h1>
+                    </div>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <span class="search-icon">🔎</span>
+
+                    <input
+                        id="searchInput"
+                        class="search-input"
+                        type="text"
+                        placeholder="Search PPM, accounting, notes..."
+                        oninput="performSearch()"
+                    >
+
+                </div>
+
+
+                <div id="searchResults"></div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         ABOUT PAGE
+    ========================================================= -->
+
+    <section id="about" class="page">
+
+        <div class="container">
+
+            <section class="section">
+
+                <div class="about-box">
+
+                    <div class="section-label">
+                        About the backbenchers
+                    </div>
+
+                    <h1>
+                        Built for students.
+                        Powered by backbenchers.
+                    </h1>
+
+                    <p>
+                        Certified Backbencher is a student-made hub
+                        for notes, assignments and sample questions.
+                        It exists for those moments when someone says
+                        “quiz tomorrow” and the entire class suddenly
+                        becomes academically motivated.
+                    </p>
+
+                    <p>
+                        The goal is simple: keep academic material
+                        organised, accessible and actually enjoyable
+                        to use.
+                    </p>
+
+                    <div class="tags">
+
+                        <span class="tag">Student-made</span>
+                        <span class="tag">Exam-ready</span>
+                        <span class="tag">Backbench certified</span>
+                        <span class="tag">Lowkey iconic</span>
+                        <span class="tag">No boring vibes</span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <section id="account" class="page"><div class="container"><section class="section"><div class="about-box"><div class="section-label">Your account</div><h1>Study your way.</h1><div id="accountContent"></div></div></section></div></section>
+    <section id="reader" class="page"><div class="container"><section class="section" id="readerSurface"><div class="reader-toolbar"><button class="small-btn" onclick="closeReader()">← Back</button><strong id="readerTitle"></strong><button class="small-btn" onclick="readerFullscreen()">Full screen</button></div><div class="reader-controls"><button id="previousPage" class="small-btn" onclick="turnPage(-1)">← Previous</button><span id="pageIndicator" aria-live="polite"></span><button id="nextPage" class="small-btn" onclick="turnPage(1)">Next →</button></div><p id="readerMessage" role="status"></p><div class="reader-image"><img id="notePage" alt="Current study note page" draggable="false"></div></section></div></section>
+
+    <!-- =========================================================
+         LOGIN MODAL
+    ========================================================= -->
+
+    <div class="modal-overlay" id="loginModal">
+
+        <div class="modal">
+
+            <button class="close-modal" onclick="closeLogin()">
+                ✕
+            </button>
+
+            <h2 id="authTitle">Welcome back.</h2>
+            <p id="authDescription">Log in to access your course notes.</p>
+            <div class="auth-tabs"><button class="small-btn" onclick="setAuthMode('login')">Login</button><button class="small-btn" onclick="setAuthMode('register')">Create account</button></div>
+            <form id="authForm">
+                <div class="form-group"><label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email" required maxlength="254"></div>
+                <div class="form-group"><label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="10" maxlength="128" required></div>
+                <div id="registrationFields" hidden>
+                    <div class="form-group"><label for="collegeSelect">College</label><select id="collegeSelect"></select></div>
+                    <div class="form-group"><label for="courseSelect">Course</label><select id="courseSelect"></select></div>
+                    <div class="form-group"><label for="yearSelect">Year</label><select id="yearSelect"></select></div>
+                </div>
+                <p class="form-message" id="authMessage" role="status" aria-live="polite"></p>
+                <button id="authSubmit" class="login-submit" type="submit">Continue</button>
+            </form>
+            <p class="forgot">Password recovery: contact the site owner to verify your account.</p>
+        </div>
+    </div>
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-brand">
+
+                    <div class="logo">
+
+                        <span class="logo-mark">♛</span>
+
+                        <span class="logo-text">
+                            <small>CERTIFIED</small>
+                            <strong>BACKBENCHER</strong>
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Built for students. Powered by backbenchers.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <button onclick="showPage('home')">
+                        Home
+                    </button>
+
+                    <button onclick="showPage('subjects')">
+                        Subjects
+                    </button>
+
+                    <button onclick="showPage('resources')">
+                        Resources
+                    </button>
+
+                    <button onclick="showPage('about')">
+                        About
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © 2026 Certified Backbencher
+                </span>
+
+                <span>
+                    P.S. Attendance is optional.
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script src="/javascript/app.js" defer></script>
+<script src="/javascript/features.js" defer></script>
+
+</body>
+</html>
+

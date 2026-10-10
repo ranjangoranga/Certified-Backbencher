@@ -1,0 +1,6 @@
+{
+  "name": "certified-backbencher", "private": true, "version": "1.0.0",
+  "type": "module", "engines": {"node": ">=24.0.0"},
+  "scripts": {"start": "node --env-file-if-exists=.env backend/server.js", "seed": "node --env-file-if-exists=.env scripts/seed.js", "admin": "node --env-file-if-exists=.env scripts/admin.js", "test": "node --test tests/*.test.js", "test:ui": "node --test tests/frontend.ui.cjs"},
+  "devDependencies": {"jsdom":"26.1.0"}
+}
