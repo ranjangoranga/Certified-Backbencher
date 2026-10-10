@@ -1,0 +1,6 @@
+.env
+storage/
+node_modules/
+*.tmp.json
+*.zip
+__pycache__/

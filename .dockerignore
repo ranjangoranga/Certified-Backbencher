@@ -1,0 +1,5 @@
+storage
+.env
+node_modules
+docs/original-index.html
+*.zip

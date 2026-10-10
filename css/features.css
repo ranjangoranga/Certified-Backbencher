@@ -1,0 +1,16 @@
+/* New features only. style.css is copied unchanged from the original site. */
+select {font:inherit;width:100%;padding:13px;border-radius:11px;border:1px solid var(--border);background:var(--bg-soft);color:var(--text);}
+.auth-tabs,.account-actions {display:flex;flex-wrap:wrap;gap:10px;margin:18px 0;}
+.form-message {color:var(--yellow);font-size:13px;line-height:1.5;margin:12px 0;}
+.modal {max-height:92vh;overflow-y:auto;}
+.account-fields {max-width:430px;margin-top:25px;}
+.account-info {color:var(--muted);line-height:1.7;margin-top:18px;}
+.reader-toolbar,.reader-controls {display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px;}
+.reader-image {display:grid;place-items:center;min-height:250px;user-select:none;-webkit-user-select:none;}
+.reader-image img {width:100%;max-width:1050px;height:auto;pointer-events:none;-webkit-touch-callout:none;}
+#readerSurface:fullscreen {background:var(--bg);padding:20px;overflow-y:auto;}
+#readerMessage {color:var(--muted);padding:12px 0;text-align:center;}
+.reader-paused img {visibility:hidden;}
+@media (max-width:900px){#accountNav {display:block;padding:10px;font-size:12px;}.nav-inner {gap:8px;}.nav-actions {gap:5px;}}
+@media (max-width:620px){.reader-toolbar {flex-wrap:wrap;}.reader-toolbar strong {order:3;width:100%;}.reader-controls {gap:6px;font-size:12px;}.reader-controls button {padding:9px;}}
+@media print {body * {visibility:hidden!important;} body::after {content:'Notes are available in the online reader only.';visibility:visible;display:block;position:fixed;top:20px;}}

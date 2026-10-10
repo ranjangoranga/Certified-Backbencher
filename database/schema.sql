@@ -1,0 +1,16 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE IF NOT EXISTS colleges (id INTEGER PRIMARY KEY, slug TEXT UNIQUE NOT NULL, name TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1);
+CREATE TABLE IF NOT EXISTS courses (id INTEGER PRIMARY KEY, college_id INTEGER NOT NULL REFERENCES colleges(id), code TEXT NOT NULL, name TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1, UNIQUE(college_id,code));
+CREATE TABLE IF NOT EXISTS course_years (id INTEGER PRIMARY KEY, course_id INTEGER NOT NULL REFERENCES courses(id), year_number INTEGER NOT NULL CHECK(year_number>0), active INTEGER NOT NULL DEFAULT 1, UNIQUE(course_id,year_number));
+CREATE TABLE IF NOT EXISTS subjects (id INTEGER PRIMARY KEY, year_id INTEGER NOT NULL REFERENCES course_years(id), code TEXT NOT NULL, name TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', color TEXT NOT NULL DEFAULT '#f6d84a', active INTEGER NOT NULL DEFAULT 1, UNIQUE(year_id,code));
+CREATE TABLE IF NOT EXISTS resources (id INTEGER PRIMARY KEY, subject_id INTEGER NOT NULL REFERENCES subjects(id), type TEXT NOT NULL CHECK(type IN ('notes','questions','assignments')), name TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', source_key TEXT UNIQUE, storage_key TEXT UNIQUE, pages INTEGER NOT NULL DEFAULT 0, active INTEGER NOT NULL DEFAULT 1);
+CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, email TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL, year_id INTEGER NOT NULL REFERENCES course_years(id), created_at INTEGER NOT NULL, disabled INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL REFERENCES users(id), csrf TEXT NOT NULL, expires_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS trial_requests (id INTEGER PRIMARY KEY, user_id INTEGER UNIQUE NOT NULL REFERENCES users(id), instagram_handle TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','rejected')), requested_at INTEGER NOT NULL, reviewed_at INTEGER);
+CREATE TABLE IF NOT EXISTS entitlements (id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL REFERENCES users(id), kind TEXT NOT NULL CHECK(kind IN ('trial','paid')), starts_at INTEGER NOT NULL, ends_at INTEGER NOT NULL, source TEXT UNIQUE NOT NULL, revoked INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL REFERENCES users(id), provider_order_id TEXT UNIQUE NOT NULL, amount INTEGER NOT NULL CHECK(amount=4900), currency TEXT NOT NULL CHECK(currency='INR'), status TEXT NOT NULL DEFAULT 'created' CHECK(status IN ('created','paid','refunded')), payment_id TEXT UNIQUE, created_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS webhook_events (id TEXT PRIMARY KEY, processed_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS rate_limits (key TEXT PRIMARY KEY, count INTEGER NOT NULL, resets_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS audit_log (id INTEGER PRIMARY KEY, action TEXT NOT NULL, target TEXT NOT NULL, created_at INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS entitlement_user ON entitlements(user_id,ends_at);
+CREATE INDEX IF NOT EXISTS resource_subject ON resources(subject_id,type);
